@@ -12,10 +12,6 @@ const path = require("path");
 
 const app = express();
 
-app.get("/", (req, res) => {
-  res.status(200).send("Servidor online");
-});
-
 // Cloud Run define a porta via variável de ambiente PORT (obrigatório)
 const PORT = process.env.PORT || 8080;
 const SECRET_KEY = process.env.SECRET_KEY || "d8ea17df7873db6b08d5e59283f60849";
@@ -79,7 +75,7 @@ function validateToken(token, expectedCode) {
 // Personalize: substitua LOGO_URL pela URL da logo da sua empresa
 // Exemplo: const LOGO_URL = "https://seusite.com.br/logo.png";
 const LOGO_URL = process.env.LOGO_URL || "https://na2.docusign.net/Signing/Images/email/Email_Logo.png";
-const COMPANY_NAME = process.env.COMPANY_NAME || "DocuSign";
+const COMPANY_NAME = process.env.COMPANY_NAME || "Sua Empresa";
 
 function challengePage(shortCode, token) {
   const logoHtml = LOGO_URL
@@ -243,9 +239,15 @@ app.get("/go/:shortCode", (req, res) => {
     return res.redirect(302, `/r/${shortCode}`);
   }
 
-  console.log(`CLIQUE | ${shortCode} → ${link.url}`);
+  // Gera ID aleatório de 11 dígitos e adiciona _NUMERO no final da URL
+  // Exemplo: .../portfolio_id_89969874675 → .../portfolio_id_89969874675_53847291034
+  // Exemplo: .../vagas → .../vagas_53847291034
+  const randomId = Math.floor(10000000000 + Math.random() * 90000000000).toString();
+  const finalUrl = link.url + "_" + randomId;
+
+  console.log(`CLIQUE | ${shortCode} → ${finalUrl}`);
   res.setHeader("Cache-Control", "no-store");
-  res.redirect(302, link.url);
+  res.redirect(302, finalUrl);
 });
 
 // ─── Health check — Google Cloud Run verifica este endpoint ──────────────────
