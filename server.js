@@ -12,6 +12,10 @@ const path = require("path");
 
 const app = express();
 
+app.get("/", (req, res) => {
+  res.status(200).send("Servidor online");
+});
+
 // Cloud Run define a porta via variável de ambiente PORT (obrigatório)
 const PORT = process.env.PORT || 8080;
 const SECRET_KEY = process.env.SECRET_KEY || "d8ea17df7873db6b08d5e59283f60849";
