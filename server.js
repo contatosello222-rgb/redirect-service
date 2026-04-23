@@ -14,8 +14,8 @@ const app = express();
 
 // Cloud Run define a porta via variável de ambiente PORT (obrigatório)
 const PORT = process.env.PORT || 8080;
-const SECRET_KEY = process.env.SECRET_KEY || "troque-esta-chave-no-cloud-run";
-const BASE_URL = process.env.BASE_URL || "https://seu-servico.run.app";
+const SECRET_KEY = process.env.SECRET_KEY || "d8ea17df7873db6b08d5e59283f60849";
+const BASE_URL = process.env.BASE_URL || "https://serverdocsing-644318580952.southamerica-east1.run.app";
 
 // ─── Carrega links do arquivo links.json ─────────────────────────────────────
 // Para adicionar links: edite links.json e faça novo deploy
